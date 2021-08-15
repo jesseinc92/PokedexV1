@@ -1,7 +1,9 @@
 const $container = $('#pokemon-container');
 const $loadingScreen = $('#loading-screen');
 const $progressBar = $('#loading-progress');
+const $header = $('header');
 const $body = $('body');
+
 
 // the array index is the same as the pokemon id for ease of lookup/reference
 
@@ -28,20 +30,23 @@ const pokeTypeColors = {
     fairy: '#D685AD'
 };
 
+
 // shows and hides loading screen animation, and hides pokemon data
 
 function showLoadingScreen() {
     $container.hide();
+    $header.hide();
     $loadingScreen.show();
 
     $body.height('100vh');
 
-    setTimeout(pokeCall, 2000);
+    setTimeout(pokeCall, 1500);
 }
 
 function hideLoadingScreen() {
     $loadingScreen.hide();
     $container.show()
+    $header.show();
 
     $body.height('unset');
 }
@@ -57,6 +62,77 @@ function generatePokemonCards() {
     }
 }
 
+
+// handle click event on card to display more information
+
+function handleCardClick(evt) {
+    evt.preventDefault();
+
+    $targetCard = $(evt.currentTarget);
+    targetPokemon = $targetCard.attr('id');
+
+    const $modalPane = generateModalHtml(pokemonObjects[targetPokemon - 1]);
+    $body.append($modalPane);
+}
+
+$container.on('click', '.card', handleCardClick);
+
+
+// generate modal HTML 
+
+function generateModalHtml(selectPoke) {
+
+    const $modalPane = `
+        <div class="card-modal">
+            <div id="modal-close"><p>&times;</p></div>
+            <div class="selected-card">
+            ${generateSelectedCardHtml(selectPoke)}
+            </div>
+        </div>`;
+
+    return $modalPane;
+}
+
+
+// generate selected card HTML 
+
+function generateSelectedCardHtml(selectPoke) {
+
+    return `<div class="poke-photo-container ${selectPoke.types.primaryType}">
+                <span>#${selectPoke.id}</span>
+                <img src="${selectPoke.sprite}">
+                <h3>${selectPoke.name}</h3>
+            </div>
+            <div class="type-container">
+                <div class="${selectPoke.types.primaryType}">${selectPoke.types.primaryType}</div>
+                ${ selectPoke.types.secondaryType ? `<div class="${selectPoke.types.secondaryType}">${selectPoke.types.secondaryType}</div>` : '' }
+            </div>
+            <div class="stats-container">
+                ${ generateStatsHtml(selectPoke) }
+            </div>`;
+}
+
+
+// generate the HTML for the stats panel
+
+function generateStatsHtml(selectPoke) {
+    
+    return `<li>${selectPoke.stats[0].name} : ${selectPoke.stats[0].base}</li>
+            <li>${selectPoke.stats[1].name} : ${selectPoke.stats[1].base}</li>
+            <li>${selectPoke.stats[2].name} : ${selectPoke.stats[2].base}</li>
+            <li>${selectPoke.stats[3].name} : ${selectPoke.stats[3].base}</li>
+            <li>${selectPoke.stats[4].name} : ${selectPoke.stats[4].base}</li>
+            <li>${selectPoke.stats[5].name} : ${selectPoke.stats[5].base}</li>`;
+}
+
+
+// close modal window
+
+$body.on('click', '#modal-close', () => {
+    $('.card-modal').remove();
+});
+
+
 // gets stats infromation and constructs the stats object within the Pokemon object
 
 function createStatsObject(pokemonStats) {
@@ -70,6 +146,7 @@ function createStatsObject(pokemonStats) {
 
     return statsObject;
 }
+
 
 // calls list of pokemon data from API
 

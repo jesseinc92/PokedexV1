@@ -2,15 +2,22 @@ body {
     display: flex;
     justify-content: center;
     align-content: center;
+    margin: 0;
 
     font: 0.75rem 'Press Start 2P', cursive;
     color: white;
+    background-color: darkslategray;
 }
 
 #loading-screen {
     font: 3rem 'Press Start 2P', cursive;
     color: black;
     position: relative;
+}
+
+#loading-screen h1 {
+    color: white;
+    letter-spacing: 5px;
 }
 
 #loading-screen img {
@@ -35,11 +42,31 @@ body {
     }
 }
 
+header {
+    position: absolute;
+    top: 5rem;
+    left: 8rem;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    display: flex;
+}
+
+header h2 {
+    margin-top: 0.5rem;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+}
+
 #pokemon-container {
     margin-top: 10rem;
+    margin-bottom: 10rem;
     display: grid;
     grid-template-columns: repeat(5, 12vw);
-    grid-template-rows: repeat(26, 15vw);
+    grid-template-rows: repeat(31, 15vw);
     column-gap: 2rem;
     row-gap: 2rem;
 }
@@ -52,6 +79,10 @@ body {
     align-items: center;
 
     letter-spacing: 1px;
+    overflow: hidden;
+
+    cursor: pointer;
+    transition: all ease-in-out;
 }
 
 .card img {
@@ -60,6 +91,97 @@ body {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+.card-modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+#modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+
+    margin-left: 3rem;
+    margin-top: 3rem;
+}
+
+#modal-close p {
+    margin-left: 5px;
+    margin-top: 36px;
+}
+
+.selected-card {
+    width: 480px;
+    height: 650px;
+    border-radius: 50px;
+    background-color: darkslategray;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.poke-photo-container {
+    height: 40%;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.poke-photo-container span {
+    position: relative;
+    left: 175px;
+}
+
+.poke-photo-container img {
+    width: 175px;
+    height: 175px;
+}
+
+.type-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.type-container div {
+    width: 25%;
+    margin: 0 1rem;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.stats-container {
+    list-style: none;
+    position: absolute;
+    left: 50%;
+    margin-top: 3rem;
+    transform: translateX(-50%);
+}
+
+.stats-container li {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+/* TYPE COLOR ASSIGNMENTS */
 
 .normal {
     background-color: #A8A77A;
