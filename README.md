@@ -6,5 +6,6 @@ This is a preliminary Pokemon Pokedex concept created to take advantage of infor
 
 - HTML
 - CSS
+- JavaScript
 - jQuery
 - Axios API
